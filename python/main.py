@@ -13,6 +13,8 @@
 from flask import Flask, request, jsonify, abort
 import MySQLdb
 import os
+import time
+import datetime
 
 
 app = Flask(__name__)
@@ -181,7 +183,7 @@ def create_user():
         cursor.execute(sql)
         db.commit()
         #rows = cursor.fetchall()
-        resp = jsonify("User {} added".format(request.json["name"]))
+        resp = jsonify("User '{}' added".format(request.json["name"]))
         resp.status_code = 200
         
         return resp
@@ -217,8 +219,106 @@ def delete_user(u_id):
 
 
 # POST job
+@app.route("/v1/jobs", methods=["POST"])
+def create_job():
+
+    if not request.json: # or not 'title' in request.json:
+        abort(400)
+
+    try:
+        db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
+        cursor = db.cursor()
+        #sql = "select * from jobs where j_id = {};".format(str(j_id))
+        sql = "INSERT INTO jobs(name) VALUES ('{}');".format(request.json["name"])
+        print(sql)
+        cursor.execute(sql)
+        db.commit()
+        #rows = cursor.fetchall()
+        resp = jsonify("Job '{}' added".format(request.json["name"]))
+        resp.status_code = 200
+        
+        return resp
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        cursor.close()
+        db.close()
+
+@app.route("/v1/jobs/<int:j_id>", methods=["DELETE"])
+def delete_job(j_id):
+
+    try:
+        db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
+        cursor = db.cursor()
+        sql = "delete from jobs where j_id = {};".format(str(j_id))
+        cursor.execute(sql)
+        #rows = cursor.fetchall()
+        resp = jsonify("Job j_id {} deleted".format(str(j_id)))
+        resp.status_code = 200
+        db.commit()
+        
+        return resp
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        cursor.close()
+        db.close()
 
 # POST message
+@app.route("/v1/messages", methods=["POST"])
+def create_message():
+
+    if not request.json: # or not 'title' in request.json:
+        abort(400)
+
+    try:
+        db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
+        cursor = db.cursor()
+        
+        ts = time.time()
+        timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+        sql = "INSERT INTO messages(body,timestamp,u_id) VALUES ('{}','{}',{});".format(request.json["body"],timestamp,request.json["u_id"])
+        print(sql)
+        cursor.execute(sql)
+        db.commit()
+        #rows = cursor.fetchall()
+        resp = jsonify("Message '{}' added".format(request.json["body"]))
+        resp.status_code = 200
+        
+        return resp
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        cursor.close()
+        db.close()
+
+@app.route("/v1/messages/<int:m_id>", methods=["DELETE"])
+def delete_message(m_id):
+
+    try:
+        db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
+        cursor = db.cursor()
+        sql = "delete from messages where m_id = {};".format(str(m_id))
+        cursor.execute(sql)
+        #rows = cursor.fetchall()
+        resp = jsonify("Message m_id {} deleted".format(str(m_id)))
+        resp.status_code = 200
+        db.commit()
+        
+        return resp
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        cursor.close()
+        db.close()
 
 # JOIN example
 
