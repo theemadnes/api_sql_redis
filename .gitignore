@@ -109,3 +109,4 @@ bin/
 include/
 lib/
 pyvenv.cfg
+setup_scripts/envs.sh
