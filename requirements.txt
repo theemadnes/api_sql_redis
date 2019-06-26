@@ -2,3 +2,4 @@ flask
 mysqlclient
 Flask-Caching
 redis
+requests

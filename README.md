@@ -33,6 +33,8 @@ To access the MySQL & redis endpoints, we're going to use environment variables,
 
 `pip3 install -r requirements.txt`
 
+I've included `requests` because I have been testing the difference in hitting the database vs redis, as indicated in `python/timer.py`.
+
 ### Populate the MySQL database
 
 `python3 setup_scripts/populate_tables.py`
