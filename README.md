@@ -40,6 +40,7 @@ redis IP address: `redis_ip`
 ### Reset your MySQL database
 
 `python3 setup_scripts/drop_tables.py`
+
 `python3 setup_scripts/populate_tables.py`
 
 
