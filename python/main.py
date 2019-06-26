@@ -62,7 +62,7 @@ def get_user(u_id):
     try:
         db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
         cursor = db.cursor()
-        sql = "select * from users where u_id = {};".format(str(u_id))
+        sql = "select * from users where u_id = {};".format(u_id)
         cursor.execute(sql)
         rows = cursor.fetchall()
         resp = jsonify(rows)
@@ -109,7 +109,7 @@ def get_message(m_id):
     try:
         db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
         cursor = db.cursor()
-        sql = "select * from messages where m_id = {};".format(str(m_id))
+        sql = "select * from messages where m_id = {};".format(m_id)
         cursor.execute(sql)
         rows = cursor.fetchall()
         resp = jsonify(rows)
@@ -152,7 +152,7 @@ def get_job(j_id):
     try:
         db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
         cursor = db.cursor()
-        sql = "select * from jobs where j_id = {};".format(str(j_id))
+        sql = "select * from jobs where j_id = {};".format(j_id)
         cursor.execute(sql)
         rows = cursor.fetchall()
         resp = jsonify(rows)
@@ -177,7 +177,6 @@ def create_user():
     try:
         db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
         cursor = db.cursor()
-        #sql = "select * from jobs where j_id = {};".format(str(j_id))
         sql = "INSERT INTO users(name,address,j_id) VALUES ('{}','{}',{});".format(request.json["name"],request.json["address"],request.json["j_id"])
         print(sql)
         cursor.execute(sql)
@@ -201,10 +200,10 @@ def delete_user(u_id):
     try:
         db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
         cursor = db.cursor()
-        sql = "delete from users where u_id = {};".format(str(u_id))
+        sql = "delete from users where u_id = {};".format(u_id)
         cursor.execute(sql)
         #rows = cursor.fetchall()
-        resp = jsonify("User u_id {} deleted".format(str(u_id)))
+        resp = jsonify("User u_id {} deleted".format(u_id))
         resp.status_code = 200
         db.commit()
         
@@ -228,7 +227,6 @@ def create_job():
     try:
         db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
         cursor = db.cursor()
-        #sql = "select * from jobs where j_id = {};".format(str(j_id))
         sql = "INSERT INTO jobs(name) VALUES ('{}');".format(request.json["name"])
         print(sql)
         cursor.execute(sql)
@@ -252,10 +250,10 @@ def delete_job(j_id):
     try:
         db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
         cursor = db.cursor()
-        sql = "delete from jobs where j_id = {};".format(str(j_id))
+        sql = "delete from jobs where j_id = {};".format(j_id)
         cursor.execute(sql)
         #rows = cursor.fetchall()
-        resp = jsonify("Job j_id {} deleted".format(str(j_id)))
+        resp = jsonify("Job j_id {} deleted".format(j_id))
         resp.status_code = 200
         db.commit()
         
@@ -304,10 +302,10 @@ def delete_message(m_id):
     try:
         db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
         cursor = db.cursor()
-        sql = "delete from messages where m_id = {};".format(str(m_id))
+        sql = "delete from messages where m_id = {};".format(m_id)
         cursor.execute(sql)
         #rows = cursor.fetchall()
-        resp = jsonify("Message m_id {} deleted".format(str(m_id)))
+        resp = jsonify("Message m_id {} deleted".format(m_id))
         resp.status_code = 200
         db.commit()
         
