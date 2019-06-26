@@ -24,7 +24,6 @@ MySQL user name: `mysql_user`
 MySQL user pw: `mysql_pw`
 redis IP address: `redis_ip`
 
-
 ### Set up virtualenv
 `python3 -m venv ../api_sql_redis`
 
@@ -33,6 +32,16 @@ redis IP address: `redis_ip`
 ### Install libraries
 
 `pip3 install -r requirements.txt`
+
+### Populate the MySQL database
+
+`python3 setup_scripts/populate_tables.py`
+
+### Reset your MySQL database
+
+`python3 setup_scripts/drop_tables.py`
+`python3 setup_scripts/populate_tables.py`
+
 
 
 
