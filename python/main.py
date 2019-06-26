@@ -321,13 +321,29 @@ def delete_message(m_id):
         db.close()
 
 # JOIN example
+@app.route("/v1/messages/detail", methods=["GET"])
+def get_messages_detail():
 
-'''
-def main():
-    db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
-    cursor = db.cursor()
-    db.close()
-'''
+    try:
+        db = MySQLdb.connect(host=os.environ["mysql_ip"], user=os.environ["mysql_user"], passwd=os.environ["mysql_pw"], database="api_sql_redis")
+        cursor = db.cursor()
+        sql = ("SELECT M.body,M.timestamp,U.name,U.address,J.name " 
+                "FROM messages M JOIN users U ON M.u_id = U.u_id "
+                "JOIN jobs J ON J.j_id = U.j_id ORDER BY M.timestamp;"
+                )
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        resp = jsonify(rows)
+        resp.status_code = 200
+        
+        return resp
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        cursor.close()
+        db.close()
 
 if __name__ == "__main__":
     #main()
