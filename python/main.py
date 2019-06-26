@@ -325,6 +325,7 @@ def delete_message(m_id):
 
 # JOIN example
 @app.route("/v1/messages/detail", methods=["GET"])
+@cache.cached(timeout=3)
 def get_messages_detail():
 
     try:
