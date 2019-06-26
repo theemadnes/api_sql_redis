@@ -19,10 +19,10 @@ Redis is used to cache GETs.
 
 To access the MySQL & redis endpoints, we're going to use environment variables, so you'll need to have those set up ahead of time, from the following vars:
 
-MySQL IP address: `mysql_ip`
-MySQL user name: `mysql_user`
-MySQL user pw: `mysql_pw`
-redis IP address: `redis_ip`
+- MySQL IP address: `mysql_ip`
+- MySQL user name: `mysql_user`
+- MySQL user pw: `mysql_pw`
+- redis IP address: `redis_ip`
 
 ### Set up virtualenv
 `python3 -m venv ../api_sql_redis`
