@@ -171,7 +171,7 @@ def get_job(j_id):
 @app.route("/v1/users", methods=["POST"])
 def create_user():
 
-    if not request.json: # or not 'title' in request.json:
+    if not request.json:
         abort(400)
 
     try:
@@ -181,7 +181,6 @@ def create_user():
         print(sql)
         cursor.execute(sql)
         db.commit()
-        #rows = cursor.fetchall()
         resp = jsonify("User '{}' added".format(request.json["name"]))
         resp.status_code = 200
         
@@ -202,7 +201,6 @@ def delete_user(u_id):
         cursor = db.cursor()
         sql = "delete from users where u_id = {};".format(u_id)
         cursor.execute(sql)
-        #rows = cursor.fetchall()
         resp = jsonify("User u_id {} deleted".format(u_id))
         resp.status_code = 200
         db.commit()
@@ -221,7 +219,7 @@ def delete_user(u_id):
 @app.route("/v1/jobs", methods=["POST"])
 def create_job():
 
-    if not request.json: # or not 'title' in request.json:
+    if not request.json:
         abort(400)
 
     try:
@@ -231,7 +229,6 @@ def create_job():
         print(sql)
         cursor.execute(sql)
         db.commit()
-        #rows = cursor.fetchall()
         resp = jsonify("Job '{}' added".format(request.json["name"]))
         resp.status_code = 200
         
@@ -252,7 +249,6 @@ def delete_job(j_id):
         cursor = db.cursor()
         sql = "delete from jobs where j_id = {};".format(j_id)
         cursor.execute(sql)
-        #rows = cursor.fetchall()
         resp = jsonify("Job j_id {} deleted".format(j_id))
         resp.status_code = 200
         db.commit()
@@ -270,7 +266,7 @@ def delete_job(j_id):
 @app.route("/v1/messages", methods=["POST"])
 def create_message():
 
-    if not request.json: # or not 'title' in request.json:
+    if not request.json:
         abort(400)
 
     try:
@@ -283,7 +279,6 @@ def create_message():
         print(sql)
         cursor.execute(sql)
         db.commit()
-        #rows = cursor.fetchall()
         resp = jsonify("Message '{}' added".format(request.json["body"]))
         resp.status_code = 200
         
@@ -304,7 +299,6 @@ def delete_message(m_id):
         cursor = db.cursor()
         sql = "delete from messages where m_id = {};".format(m_id)
         cursor.execute(sql)
-        #rows = cursor.fetchall()
         resp = jsonify("Message m_id {} deleted".format(m_id))
         resp.status_code = 200
         db.commit()
@@ -344,5 +338,5 @@ def get_messages_detail():
         db.close()
 
 if __name__ == "__main__":
-    #main()
+
     app.run(debug=True)
