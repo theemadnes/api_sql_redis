@@ -15,9 +15,17 @@ import MySQLdb
 import os
 import time
 import datetime
+from flask_caching import Cache
 
-
+config = {
+    "DEBUG": True,          # some Flask specific configs
+    "CACHE_TYPE": "redis", # Flask-Caching related configs
+    "CACHE_DEFAULT_TIMEOUT": 5,
+    "CACHE_REDIS_HOST": os.environ["redis_ip"]
+}
 app = Flask(__name__)
+app.config.from_mapping(config)
+cache = Cache(app)
 
 @app.route("/")
 def home():
@@ -36,6 +44,7 @@ def not_found(error=None):
 
 # GET user(s)
 @app.route("/v1/users", methods=["GET"])
+@cache.cached(timeout=3)
 def get_users():
 
     try:
@@ -83,6 +92,7 @@ def get_user(u_id):
 
 # GET message(s)
 @app.route("/v1/messages", methods=["GET"])
+@cache.cached(timeout=3)
 def get_messages():
 
     try:
@@ -126,6 +136,7 @@ def get_message(m_id):
 
 # GET job(s)
 @app.route("/v1/jobs", methods=["GET"])
+@cache.cached(timeout=3)
 def get_jobs():
 
     try:
@@ -339,4 +350,5 @@ def get_messages_detail():
 
 if __name__ == "__main__":
 
-    app.run(debug=True)
+    #app.run(debug=True)
+    app.run()
