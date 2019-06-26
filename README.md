@@ -8,10 +8,10 @@ This assumes that you have an existing MySQL database and Redis cache up and run
 This API implements a simple system where there are three tables:
 
 - users
-- addresses
+- messages
 - jobs
 
-So a given user has an address and a job, and you can query all of those details via the API. The queries the APIs implement the appropriate SQL commands, and will implement joins as needed. 
+A user has a job (i.e. foreign key constraint), and a message is written by a user, so there is a foreign key constraint between the messages table and the users table.
 
 Redis is used to cache GETs.
 
